@@ -11,5 +11,14 @@ ajout_produit_commande_vpc:
     defaults: { _controller: VieilleSardineCommandeBundle:Commande:CreerFormVPC }
 
 commande_groupee:
-    patterne: /commandeGroupe
-    defaults: { _controller: VieilleSardineCommandeBundle:CommandeGroupe:indexAction }
+    pattern: /commandeGroupe
+    defaults: { _controller: VieilleSardineCommandeBundle:CommandeGroupe:index  }
+    
+detail_commande:
+    pattern: /detailCommande
+    defaults: { _controller: VieilleSardineCommandeBundle:Detail:detailler }
+
+suivi_commande:
+    pattern; /suiviCommande
+    defaults: { _controller: VieilleSardineCommandeBundle:SuiviCommande:index }
+    

@@ -1,0 +1,38 @@
+{% extends "::principal_layout.html.twig" %}
+
+{% block body %}
+   <h1>Gestion des commandes groupe </h1>
+   
+    <form method="post" action="cible.php">
+
+    <p>
+        <TABLE BORDER="1"> 
+            <CAPTION> Récapitulatif de la commande groupée </CAPTION> 
+            <TR> 
+           <TH> Produit </TH> 
+           <TH> Quantité </TH> 
+           <TH> Prix unitaire </TH> 
+           <TH> Prix total </TH> 
+           <TH> Supprimer </TH> 
+            </TR> 
+            <TR> 
+           <TH> Titre B1 </TH> 
+            {% for titreLivre in Titre %}
+                    <li>{{ titreLivre }}</li>
+            {% endfor %}
+/*
+           <TD> Valeur B2 </TD> 
+           <TD> Valeur B3 </TD> 
+           <TD> Valeur B4 </TD> 
+*/
+            </TR> 
+          </TABLE>
+    </p>
+
+        </p>
+
+    </form>
+   
+   
+{% endblock %}
+{# empty Twig template #}

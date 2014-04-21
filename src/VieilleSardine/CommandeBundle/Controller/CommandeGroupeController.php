@@ -9,7 +9,10 @@
 namespace VieilleSardine\CommandeBundle\Controller;
 
 use VieilleSardine\CommandeBundle\Entity\Lignes;
+use VieilleSardine\UserBundle\Entity\Client;
+use VieilleSardine\UserBundle\Entity\CompteClient;
 use VieilleSardine\ProduitBundle\Entity\Produit;
+use VieilleSardine\CommandeBundle\Entity\CommandeGroupee;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,33 +22,39 @@ class CommandeGroupeController extends Controller
     {
         return $this->render('VieilleSardineCommandeBundle:Commande:IHMCommandeGroupeVPC.html.twig');
     }
-    // Méthode qui récupère toutes les infos de la commande groupée
-    public function GetInfoCommandeGroupe()
+    // Méthode qui créer un tableau avec toutes les infos de la commande groupée
+    public function CreerFormRecapCommandeGroupeAction()
     {
-        
+        $commandeGroupe = $this->getDoctrine()
+        ->getRepository('CommandeBundle:CommandeGroupee')
+        ->find($id);
+
+    if (!$produit) {
+        throw $this->createNotFoundException(
+            'Aucun produit trouvé pour cet id : '.$id
+        );
+    }
     }
     
-    /*
-    // Méthode qui créer le formulaire utilisé pour ajouter un produit à la commande
-    public function CreerFormVPCAction(Request $request)
+    public function formNewClientAction(Request $request)
     {
-      
-        $UneLigne = new Lignes();
-        $form = $this->createFormBuilder($UneLigne)
-            ->add('idProduit', 'text')
-            ->add('quantite', 'number')
-            ->add('Ajouter', 'submit')
+        $client = new Client();
+        $compteclient = new CompteClient();
+        /*$client->setID('id du client');;
+        */
+        $form = $this->createFormBuilder($client)
+            ->add('nom', 'text')
+            ->add('prenom', 'text')
+            ->add('mail', 'text')
+            ->add('codePostal', 'text')
+            ->add('ville', 'text')
             ->getForm();
-        
-         $form->handleRequest($request);
 
-        return $this->render('VieilleSardineCommandeBundle:Commande:IHMCommandeVPC.html.twig', array('form' => 
-            $form->createView(),
+        return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
+            'form' => $form->createView(),
         ));
-            
-        
     }
-    */
+    
     /*
     // Méthode pour retrouver les attributs d'un produit
     public function getInfoProduitAction($id)
