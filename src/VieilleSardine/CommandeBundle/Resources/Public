@@ -1,0 +1,15 @@
+// JavaScript Document
+$(document).ready(function(e) {
+	
+	function majPrix(){
+		$("#idFromCmdVPC").val($("#id_PrixProdui").val() * $("#idQte").val());
+	}
+        
+        function infoProduit(){
+            
+        }
+	
+    $("body").on("keyup","#id_PrixProduit",majPrix());
+    $("body").on("keyup","#idQte",majPrix());
+    $("body").on("keyup","#idProduit",infoProduit());
+});

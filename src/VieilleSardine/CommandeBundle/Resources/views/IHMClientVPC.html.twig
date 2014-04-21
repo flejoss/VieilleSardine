@@ -1,0 +1,191 @@
+
+{# src/VieilleSardine/CommandeBundle/Resources/views/Commande/IHMCommandeVPC.html.twig #}
+
+{% extends "::principal_layout.html.twig" %}
+{% block javascript %}
+ 
+    <script type="text/javascript" src="{{ asset('js/jquery-1.10.2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui.custom.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.ui.autocomplete.js') }}"></script>
+   
+{% endblock %}
+    
+{% block body %}
+   <h1>Identification du client </h1>
+   
+   <!-- On a un form qui imbrique le formulaire de l'ajout des produits -->
+    <div id='IdentifClient'>
+        ID Client <input type="Label">
+        <input type="button" value ="Inscrire un client" id ="idBtnInscrireClient" action="Acompleter">
+        <input type="button" value ="Identifier un client" id ="idBtnIdentifClient" action="Acompleter">
+    </div>
+   
+    <!-- Tableau récapitulatif, les lignes sont ajoutés lorsqu'un produit est ajouté -->
+    <div id ="idTabRecap">
+    <p> 
+        <TABLE BORDER="1"> 
+          <CAPTION> Liste des produits de la commande </CAPTION> 
+          <TR> 
+            <TH> Produits </TH> 
+            <TH> ID Produit </TH> 
+            <TH> Libellé produit</TH> 
+            <TH> Quantité Produit </TH> 
+            <TH> Prix Produit </TH> 
+            <TH> Prix total </TH> 
+          </TR> 
+        </TABLE> 
+    </p>
+    </div>
+    
+      <div id='InfoClient'>
+        Informations client
+        <input type="button" value ="Utiliser une adresse existante" id="idBtnUtilAdresse" action="Acompleter">
+        
+        <input type="button" value ="Ajouter une adresse" id="idBtnAjouterAdresse" action="Acompleter">
+    </div>
+    
+    <div>
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        Adresse de facturation
+        {{ form_row(form.nom, {
+            'label': 'Nom client',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idNom'
+                     }} )
+         
+        }}
+        
+        {{ form_row(form.prenom, {
+            'label': 'Prenom client',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idPrenom'
+                     }} )
+         
+        }}
+        
+          {{ form_row(form.numeroVoie, {
+            'label': 'Numero voie',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idNumVoie'
+                     }} )
+         
+        }}
+        
+          {{ form_row(form.typeVoie, {
+            'label': 'Type Voie',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idTypeVoie'
+                     }} )
+         
+        }}
+        
+          {{ form_row(form.codePostal, {
+            'label': 'Code Postal',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idCP'
+                     }} )
+         
+        }}
+        
+        
+          {{ form_row(form.ville, {
+            'label': 'Ville',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idVille'
+                     }} )
+         
+        }}
+        
+          {{ form_row(form.pays, {
+            'label': 'Pays',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idPays'
+                     }} )
+         
+        }}
+        
+        
+         Adresse de livraison
+        {{ form_row(form.nom, {
+            'label': 'Nom client',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idNomlivraison'
+                     }} )
+         
+        }}
+        
+        {{ form_row(form.prenom, {
+            'label': 'Prenom client',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idPrenomlivraison'
+                     }} )
+         
+        }}
+        
+          {{ form_row(form.numeroVoie, {
+            'label': 'Numero voie',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idNumVoielivraison'
+                     }} )
+         
+        }}
+        
+          {{ form_row(form.typeVoie, {
+            'label': 'Type Voie',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idTypeVoielivraison'
+                     }} )
+         
+        }}
+        
+          {{ form_row(form.codePostal, {
+            'label': 'Code Postal',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idCPlivraison'
+                     }} )
+         
+        }}
+        
+        
+          {{ form_row(form.ville, {
+            'label': 'Ville',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idVillelivraison'
+                     }} )
+         
+        }}
+        
+          {{ form_row(form.pays, {
+            'label': 'Pays',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idPayslivraison'
+                     }} )
+         
+        }}
+
+
+    {{ form_end(form) }}
+
+    </div>
+    
+     <a href="ajoutProduit" >Retour</a>
+
+
+    
+{% endblock %}
