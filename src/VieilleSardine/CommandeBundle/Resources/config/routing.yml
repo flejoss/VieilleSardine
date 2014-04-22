@@ -9,7 +9,6 @@ vieille_sardine_commande_homepage:
 ajout_produit_commande_vpc:
     pattern:  /ajoutProduit
     defaults: { _controller: VieilleSardineCommandeBundle:Commande:CreerFormVPC }
-<<<<<<< HEAD
 
 commande_groupee:
     pattern: /commandeGroupe
@@ -20,9 +19,8 @@ detail_commande:
     defaults: { _controller: VieilleSardineCommandeBundle:Detail:detailler }
 
 suivi_commande:
-    pattern; /suiviCommande
-    defaults: { _controller: VieilleSardineCommandeBundle:SuiviCommande:index }
-=======
+    pattern: /suiviCommande
+    defaults: { _controller: VieilleSardineCommandeBundle:SuiviCommande:detailler }
     
 id_client_commande_vpc:
     pattern:  /identifierClient
@@ -36,5 +34,4 @@ ahs_commun_json_IdProduit:
 InfoProduit:
     pattern: /js/InfoProduit
     defaults: { _controller: VieilleSardineCommandeBundle:Commande:InfoProduitAction}
->>>>>>> 88944c22e7986104a604cfe9460f655d8ceba3cb
     

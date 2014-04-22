@@ -1,1 +1,33 @@
-{# empty Twig template #}
+{# src/VieilleSardine/CommandeBundle/Resources/views/Commande/SuiviCommande.html.twig #}
+
+{% extends "::principal_layout.html.twig" %}
+
+{% block body %}
+    <div id="idRecherche">
+        Rechercher par ID client <input type="Label">
+        Rechercher par nom client <input type="Label">
+        Rechercher par date <input type="Label">
+        Rechercher par ID commande <input type="Label">
+    </div>
+
+    <div id ="idTabCmd">
+    <p> 
+        <TABLE BORDER="1"> 
+          <CAPTION> Liste des commandes </CAPTION> 
+          <TR> 
+            <TH> Client </TH> 
+            <TH> Commande </TH> 
+            <TH> Date commande </TH>
+          </TR>
+            {% for commandes in cmds %}
+            <TR>
+                <li>{{ commandes[id]}}</li>
+                <li>{{ commandes[date]}}</li>
+                <li>{{ commandes[id]}}</li>
+            </TR>
+            {% endfor %}
+    
+        </TABLE> 
+    </p>
+    </div>
+{% endblock %}
