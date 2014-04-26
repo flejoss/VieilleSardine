@@ -1,0 +1,183 @@
+{# src/VieilleSardine/CommandeBundle/Resources/views/Commande/IHMCommandeVPC.html.twig #}
+{% extends "::principal_layout.html.twig" %}
+{% block stylesheets %}
+{% stylesheets '@VieilleSardineCommandeBundle/Resources/public/css/*'  %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% endblock %}
+{% block javascripts %}
+       <script>
+        // On utilise ce tableau pour l'autocomplétion
+    var tabClients = [
+        {% for cli in clients %}
+                {
+                    label:"{{cli.idClient}}",
+                    desc:"{{cli.nom}}",
+                    value:"{{cli.pays}}",
+                    prenom:"{{cli.prenom}}",
+                    numeroVoie:"{{cli.numeroVoie}}",
+                    typeVoie:"{{cli.typeVoie}}",
+                    codePostal:"{{cli.codePostal}}",
+                    ville:"{{cli.ville}}"
+                },
+        {% endfor %}
+    ];
+    </script>
+   {% javascripts '@VieilleSardineCommandeBundle/Resources/public/js/jquery-1.10.2.js'
+    '@VieilleSardineCommandeBundle/Resources/public/js/jquery-ui.custom.js'
+    '@VieilleSardineCommandeBundle/Resources/public/js/JQuerryClient.js' 
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script> 
+    {% endjavascripts %} 
+{% endblock %} 
+{% block body %}
+   <h1>Identification du client </h1>
+   
+   <!-- On a un form qui imbrique le formulaire de l'ajout des produits -->
+    <div id='InscrireClient'>
+       
+        <input type="button" value ="Inscrire un client" id ="idBtnInscrireClient" action="Acompleter">
+    </div>
+ 
+    <!-- Tableau récapitulatif, les lignes sont ajoutés lorsqu'un produit est ajouté -->
+    <div id ="idTabRecap">
+       
+    <p> 
+        <TABLE BORDER="1"> 
+          <CAPTION> Liste des produits de la commande </CAPTION> 
+          <TR> 
+            <TH> Produits </TH> 
+            <TH> ID Produit </TH> 
+            <TH> Libellé produit</TH> 
+            <TH> Quantité Produit </TH> 
+            <TH> Prix Produit </TH> 
+            <TH> Prix total </TH> 
+          </TR> 
+        </TABLE> 
+    </p>
+    </div>
+    
+      <div id='InfoClient'>
+        Informations client
+        <input type="button" value ="Utiliser une adresse existante" id="idBtnUtilAdresse" action="Ajouter la méthode du bundle User pour gérer les adresses">
+        
+        <input type="button" value ="Ajouter une adresse" id="idBtnAjouterAdresse" action="Ajouter la méthode du bundle User pour gérer les adresses">
+    </div>
+    
+    <div id="InfoClientForm">
+        <!-- Formulaire qui contient les infos de l'adresse de facturation -->
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+        Adresse de facturation
+        
+         {{ form_row(form.idClient, {
+            'label': 'Id Client',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idClient'
+                     }} )
+         
+        }}
+        
+        {{ form_row(form.nom, {
+            'label': 'Nom client',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'nom'
+                     }} )
+         
+        }}
+        
+        {{ form_row(form.prenom, {
+            'label': 'Prenom client',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'prenom'
+                     }} )
+         
+        }}
+        
+          {{ form_row(form.numeroVoie, {
+            'label': 'Numero voie',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'numeroVoie'
+                     }} )
+         
+        }}
+        
+          {{ form_row(form.typeVoie, {
+            'label': 'Type Voie',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'typeVoie'
+                     }} )
+         
+        }}
+        
+          {{ form_row(form.codePostal, {
+            'label': 'Code Postal',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'codePostal'
+                     }} )
+         
+        }}
+        
+        
+          {{ form_row(form.ville, {
+            'label': 'Ville',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'ville'
+                     }} )
+         
+        }}
+        
+          {{ form_row(form.pays, {
+            'label': 'Pays',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'pays'
+                     }} )
+         
+        }}
+        
+        
+        
+    {{ form_end(form) }}
+    </div>
+    <div id="FormAdresseLivraison">
+        <!-- Formulaire qui contient l'adresse de livraison si différente -->
+        Adresse de Livraison
+        <br />
+         Nom Client
+             <input type="text" name="NomClient" id="id_NomClient" />
+             <br />
+        Prenom Client
+             <input type="text" name="PrenomClient" id="id_PrenomClient"/>
+             <br />
+        Numero Voie
+             <input type="text" name="NumeroVoie" id="id_NumeroVoie" />
+             <br />
+             
+        Type Voie
+             <input type="text" name="TypeVoie" id="id_TypeVoie" />
+             <br />
+             
+        Code Postal
+             <input type="text" name="CodePostal" id="id_CodePostal" />
+             <br />
+             
+        Ville
+             <input type="text" name="Ville" id="id_Ville" />
+             <br />
+             
+        Pays
+             <input type="text" name="Pays" id="id_Pays" />
+             <br />
+    </div>
+    
+     <a href="ajoutProduit" >Retour</a>
+    
+{% endblock %}

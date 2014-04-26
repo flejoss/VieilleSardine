@@ -1,0 +1,89 @@
+{# src/VieilleSardine/CommandeBundle/Resources/views/Commande/IHMCommandeVPC.html.twig #}
+{% extends "::principal_layout.html.twig" %}
+{% block stylesheets %}
+{% stylesheets '@VieilleSardineCommandeBundle/Resources/public/css/*'  %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% endblock %}
+{% block javascripts %}
+    <script>
+        // On utilise ce tableau pour l'autocomplétion
+    var tabProduits = [
+        {% for prod in produits %}
+                {
+                    label:"{{prod.idProduit}}",
+                    desc:"{{prod.titre}}",
+                    value:"{{prod.prixTtc}}"
+                },
+        {% endfor %}
+    ];
+    </script>
+   {% javascripts '@VieilleSardineCommandeBundle/Resources/public/js/jquery-1.10.2.js'
+    '@VieilleSardineCommandeBundle/Resources/public/js/jquery-ui.custom.js'
+    '@VieilleSardineCommandeBundle/Resources/public/js/JQuerry.js' 
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script> 
+    
+{% endjavascripts %} 
+{% endblock %}
+    
+{% block body %}
+    
+   <h1>Gestion des commandes - VPC </h1>
+   
+   <!-- On a un form qui imbrique le formulaire de l'ajout des produits -->
+<form name="CommandeVPC" id="idFormCmdVPC" method="post" action="AjoutLigne.php" > 
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.idProduit, {
+            'label': 'Id Produit',
+            'attr' : {
+                        'maxlength' : '30',
+                        'data-id' : 'idProduit',
+                        'data-url' : path('ahs_commun_json_IdProduit')
+                     }} )
+         
+        }}
+        
+        {{ form_row(form.quantite, {
+            'label' : 'Quantite',
+            'attr' : {
+                        'maxlength' : '5',
+                        'data-id' : 'quantite'
+                    }} )
+        }}
+    {{ form_end(form) }}
+    <!-- Autres attributs du produit, trouvés automatiquement -->
+    <div id ='idInfoProduit'>
+    Libellé Produit
+             <input type="text" name="LibelleProduit" id="id_LibelleProduit" />
+             <br />
+    Prix Produit
+             <input type="text" name="PrixProduit" id="id_PrixProduit"/>
+             <br />
+    Prix total
+             <input type="text" name="PrixTotal" id="id_PrixTotal" />
+             <br />
+    </div>
+    <!-- Tableau récapitulatif, les lignes sont ajoutés lorsqu'un produit est ajouté -->
+    <div id ="idTabRecap">
+    <p> 
+        <TABLE BORDER="1" id="ListeProduits"> 
+          <CAPTION> Liste des produits de la commande </CAPTION> 
+          <TR> 
+            <TH> ID Produit </TH> 
+            <TH> Libellé produit</TH> 
+            <TH> Quantité Produit </TH> 
+            <TH> Prix Produit </TH> 
+            <TH> Prix total </TH> 
+          </TR> 
+        </TABLE> 
+    </p>
+    </div>
+    
+    <div id='ValidationCmd'>
+        <a href="identifierClient" target="_blank"> <input type="submit" METHOD="POST" value="Valider"> </a>
+    </div>
+ 
+</form>
+{% endblock %}

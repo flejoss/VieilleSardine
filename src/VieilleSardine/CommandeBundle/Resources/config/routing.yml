@@ -27,3 +27,20 @@ InfoProduit:
     pattern: /js/InfoProduit
     defaults: { _controller: VieilleSardineCommandeBundle:Commande:InfoProduitAction}
     
+commande_groupee:
+    pattern: /CommandeBundle/commandeGroupe
+    defaults: { _controller: VieilleSardineCommandeBundle:CommandeGroupe:index  }
+    
+suivi_Commande_Perso:
+    pattern: /suiviCommandePerso
+    defaults: { _controller: VieilleSardineCommandeBundle:Commande:suiviCommandePerso}
+    
+detail_commande:
+    pattern: /suiviCommandePerso/{idCmd}
+    defaults: { _controller: VieilleSardineCommandeBundle:Commande:detailCommande }
+
+
+suivi_commande:
+    pattern: /CommandeBundle/suiviCommande
+    defaults: { _controller: VieilleSardineCommandeBundle:Commande:RecapAllCommandesNomClient }
+ 
