@@ -91,9 +91,6 @@ class CommandeController extends Controller
          // return $this->render('VieilleSardineCommandeBundle:Commande:IHMCommandeVPC.html.twig' , array('products'=>$products));
     }
     
-       
-
-    
     // Méthode de recherche utilisée par l'autocomplétion
     public function findIdProduitLike( $term, $limit = 10 )
     {
