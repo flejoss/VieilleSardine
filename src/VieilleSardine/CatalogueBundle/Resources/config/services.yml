@@ -1,0 +1,7 @@
+parameters:
+#    vieille_sardine_catalogue.example.class: VieilleSardine\CatalogueBundle\Example
+
+services:
+#    vieille_sardine_catalogue.example:
+#        class: %vieille_sardine_catalogue.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

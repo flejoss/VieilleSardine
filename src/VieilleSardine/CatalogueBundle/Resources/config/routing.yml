@@ -1,0 +1,3 @@
+vieille_sardine_catalogue_homepage:
+    pattern:  /
+    defaults: { _controller: VieilleSardineCatalogueBundle:Catalogue:index }
