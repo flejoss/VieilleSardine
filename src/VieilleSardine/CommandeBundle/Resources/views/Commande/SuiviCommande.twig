@@ -19,11 +19,18 @@
             <TH> Commande </TH> 
             <TH> Date commande </TH>
           </TR>
-            {% for commandes in cmds %}
+            {% for commande in tab %}
             <TR>
-                <li>{{ commandes[id]}}</li>
-                <li>{{ commandes[date]}}</li>
-                <li>{{ commandes[id]}}</li>
+                <li>{{commande[client]}}</li>
+                {#<li>{{commande[commandeID]}}</li>#}
+                {# si on clique dessus, redirigie vers /suiviCommande/IdDeLaCommande #}
+                <a href="{{ path('suiviCommande', {'idCmd': commande[commandeID]}) }}">
+                    {{ commande[commandeID] }}
+                </a>
+                {#<input type="button" value =commande[commandeID] id ="btnDetailCommande" action="detailCommande">
+                {{ include('AcmeArticleBundle:Article:articleDetails.html.twig', {'article': article}) }}
+                #}
+                <li>{{commande[commandeDate]}}</li>
             </TR>
             {% endfor %}
     

@@ -244,28 +244,32 @@ class CommandeController extends Controller
     }
     
     public function detailCommandeAction($idCmd)
-    {
+    {// il manque les frais de port ! où les trouver ?
         $manageur = $this->getDoctrine()->getManager();
         $commande = $manageur->getRepository("CommandeBundle:Commande")->find($idCmd);
         $manag = $this->getDoctrine()->getManager();
         $listeLignes = $manag->getRepository("CommandeBundle:Lignes")->findByidCommande($idCmd);
-        //getEstGroupee()
-        //getPourcentageRemise()
-        //montant
+        $tab = array();
         foreach($listeLignes as $ligne) {
             $em = $this->getDoctrine()->getEntityManager();
             $pdt = $em->getRepository('VieilleSardineProduitBundle:Produit')->find($ligne.getIdLigne());
             $pT = $pdt.getPrixHt() * $ligne.getQuantite();
             $tab[] = array( produit => $pdt->getTitre(), quantité => $ligne.getQuantite(), prixUnitaire => $pdt.getPrixHt(), prixTotal => $pT );
          }
+         $info = array();
          if ($commande.getEstGroupee())
          {
-             //tab[] = prixTotal => "Groupée";
+             $info["type"] = "Groupée";
          }
          else{
-             
+             $info["type"] = "Simple";
          }
-         return $this->render('CommandeBundle:Commande:DetailCommande.html.twig', $tab);
+         $info["remise"] = $commande.getPourcentageRemise();
+         $info["montant"] = $commande.getMontant();
+         $info["dateCommande"] = $commande.getDateCommande();
+         $info["etat"] = $commande.getEtatCommande;
+         return $this->render('CommandeBundle:Commande:DetailCommande.html.twig', $tab, $info
+                 );
     }
     
     public function suiviCommandePersoAction()
