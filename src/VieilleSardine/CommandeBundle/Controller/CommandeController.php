@@ -80,17 +80,17 @@ class CommandeController extends Controller {
             var_dump($prod);
               // Si le formulaire est valide, on crée la commande et la confirmation de commande
             $LaCommande = new Commande();
-            $LaCommande->setDateCommande(date('Y-m-d'));
             $LaCommande->setEtatCommande("En Attente de préparation");
             $LaCommande->setPourcentageRemise("0");
+            $LaCommande->setMontant(0);
             $LaCommande->setEstGroupee(false);
             
 
             $ConfirmationCommande = new ConfirmationDeCommande();
             $ConfirmationCommande->setObjet("Confirmation Commande");
             $ConfirmationCommande->setDestinataire($nomClient);
-            $ConfirmationCommande->setDateCommande(date('Y-m-d'));
-           // $ConfirmationCommande->setMontantCommande($LaCommande->getMontantCommande());
+            $ConfirmationCommande->setMontantCommande(0);
+            $ConfirmationCommande->setMessage("Coucou");
             $ConfirmationCommande->setIdCommande($LaCommande->getIdCommande());
 
             $em = $this->getDoctrine()->getManager();
@@ -155,20 +155,28 @@ class CommandeController extends Controller {
         ));
     }
 
-    public function CreerFormRecapClient(Request $request)
-    {
-          return $this->render('VieilleSardineCommandeBundle:Commande:IHMRecapCommande.html.twig'
-        ); 
+    // Méthode pour la vue du recap de la commande
+    public function CreerFormRecapClient(Request $request) {
+        return $this->render('VieilleSardineCommandeBundle:Commande:IHMRecapCommande.html.twig'
+        );
     }
-         public function RecapAllCommandesNomClientAction()
+    
+    public function RecapAllCommandesNomClientAction()
     {
-        $manageur = $this->getDoctrine()->getManager();
-        $listecommandes = $manageur->getRepository("CommandeBundle:Commande")->findAll();
+          $compteClient = $this->getUser();
+          $id = $compteClient->getID();
+          $manageur = $this->getDoctrine()->getManager();
+          $client = $manageur->getRepository("VieilleSardineUserBundle:Client")->findOneByidCompteClient($id);
+          var_dump($client->getPrenom());
+        $listecommandes = $manageur->getRepository("VieilleSardineCommandeBundle:Commande")->findAll();
+        $tab = array();
          foreach($listecommandes as $cmd) {
         // On ajoute la commande dans l'array.
-            $em = $this->getDoctrine()->getEntityManager();
-            $client = $em->getRepository('VieilleSardineUserBundle:Client')->findOneByidClient($listecommandes->getIdClient());
-             $tab[] = array(client => $client->getPrenom(), commandeID => $cmd.getIdCommande(), commandeDate => $cmd.getDateCommande() );
+        //    $em = $this->getDoctrine()->getEntityManager();
+        //    $client = $em->getRepository('VieilleSardineUserBundle:Client')->findOneByidClient($cmd->getIdClient());
+          
+             
+            $tab[] = array(client => $client->getPrenom(), commandeID => $cmd->getIdCommande(), commandeDate => $cmd->getDateCommande() );
          }
         return $this->render('VieilleSardineCommandeBundle:Commande:SuiviCommande.html.twig', $tab);
     }
@@ -204,6 +212,7 @@ class CommandeController extends Controller {
     
     public function suiviCommandePersoAction()
     {
+        $session = $request->getSession();
         $idClt = $session->get('idClient');
         $manageur = $this->getDoctrine()->getManager();
         $listecommandes = $manageur->getRepository("CommandeBundle:Commande")->findByIdClient($idClt);
