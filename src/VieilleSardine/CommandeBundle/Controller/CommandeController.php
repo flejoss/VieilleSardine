@@ -155,10 +155,62 @@ class CommandeController extends Controller {
         ));
     }
 
-    // Méthode pour la vue du recap de la commande
-    public function CreerFormRecapClient(Request $request) {
-        return $this->render('VieilleSardineCommandeBundle:Commande:IHMRecapCommande.html.twig'
-        );
+    public function CreerFormRecapClient(Request $request)
+    {
+          return $this->render('VieilleSardineCommandeBundle:Commande:IHMRecapCommande.html.twig'
+        ); 
+    }
+         public function RecapAllCommandesNomClientAction()
+    {
+        $manageur = $this->getDoctrine()->getManager();
+        $listecommandes = $manageur->getRepository("CommandeBundle:Commande")->findAll();
+         foreach($listecommandes as $cmd) {
+        // On ajoute la commande dans l'array.
+            $em = $this->getDoctrine()->getEntityManager();
+            $client = $em->getRepository('VieilleSardineUserBundle:Client')->findOneByidClient($listecommandes->getIdClient());
+             $tab[] = array(client => $client->getPrenom(), commandeID => $cmd.getIdCommande(), commandeDate => $cmd.getDateCommande() );
+         }
+        return $this->render('VieilleSardineCommandeBundle:Commande:SuiviCommande.html.twig', $tab);
+    }
+    
+    public function detailCommandeAction($idCmd)
+    {// il manque les frais de port ! où les trouver ?
+        $manageur = $this->getDoctrine()->getManager();
+        $commande = $manageur->getRepository("CommandeBundle:Commande")->find($idCmd);
+        $manag = $this->getDoctrine()->getManager();
+        $listeLignes = $manag->getRepository("CommandeBundle:Lignes")->findByidCommande($idCmd);
+        $tab = array();
+        foreach($listeLignes as $ligne) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $pdt = $em->getRepository('VieilleSardineProduitBundle:Produit')->find($ligne.getIdLigne());
+            $pT = $pdt.getPrixHt() * $ligne.getQuantite();
+            $tab[] = array( produit => $pdt->getTitre(), quantité => $ligne.getQuantite(), prixUnitaire => $pdt.getPrixHt(), prixTotal => $pT );
+         }
+         $info = array();
+         if ($commande.getEstGroupee())
+         {
+             $info["type"] = "Groupée";
+         }
+         else{
+             $info["type"] = "Simple";
+         }
+         $info["remise"] = $commande.getPourcentageRemise();
+         $info["montant"] = $commande.getMontant();
+         $info["dateCommande"] = $commande.getDateCommande();
+         $info["etat"] = $commande.getEtatCommande;
+         return $this->render('CommandeBundle:Commande:DetailCommande.html.twig', $tab, $info
+                 );
+    }
+    
+    public function suiviCommandePersoAction()
+    {
+        $idClt = $session->get('idClient');
+        $manageur = $this->getDoctrine()->getManager();
+        $listecommandes = $manageur->getRepository("CommandeBundle:Commande")->findByIdClient($idClt);
+        foreach($listecommandes as $cmd) {
+            $tab[] = array(idCmd => $cmd->getIdCommande(), dateCmd => $cmd.getEtatCommande(), etatCmd => $cmd.getDateCommande() );
+         }
+         return $this->render('CommandeBundle:Commande:SuiviCommandePerso.html.twig', $tab);
     }
 
 }
