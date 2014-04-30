@@ -1,0 +1,49 @@
+{# src/VieilleSardine/CommandeBundle/Resources/views/Commande/DetailCommande.html.twig #}
+
+{% extends "::principal_layout.html.twig" %}
+
+{% block body %}
+    <div>
+            Détail de la commande du : {{info[dateCommande]}}
+    </div>
+    <div>
+            Etat de la commande : {{info[etat]}}
+    </div>
+    <div id ="idTabCmd">
+    <p> 
+        <TABLE BORDER="1"> 
+          <CAPTION> Liste des commandes </CAPTION> 
+          <TR> 
+            <TH> Produit </TH> 
+            <TH> Quantité </TH>
+            <TH> Prix unitaire </TH>
+            <TH> Prix total </TH> $tab, $info
+          </TR>
+            {% for ligne in tab %}
+            <TR>
+                <td>{{ligne[produit]}}</td> {# ligne.produit #}
+                <td>{{ligne[quantité]}}</td>
+                <td>{{ligne[prixUnitaire]}}</td>
+                <td>{{ligne[prixTotal]}}</td>
+            </TR>
+            {% endfor %}
+            <TR>
+                <td>Type de la commande</td>
+                <td>{{info[type]}}</td> {# info.type #}
+            </TR>
+            <TR>
+                <td>Remise</td>
+                <td>{{info[remise]}}</td>
+            </TR>
+            <TR>
+                <td>Prix total</td>
+                <td>{{info[montant]}}</td>
+            </TR>
+        </TABLE> 
+    </p>
+    </div>
+            {# si on clique sur ce lien, redirigie vers /suiviCommandePerso #}
+            <a href="{{ path('suiviCommandePerso') }}">
+                Retour à toutes les commandes
+            </a>
+{% endblock %}

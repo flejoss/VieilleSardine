@@ -1,0 +1,30 @@
+{# src/VieilleSardine/CommandeBundle/Resources/views/Commande/SuiviCommandePerso.html.twig #}
+
+{% extends "::principal_layout.html.twig" %}
+
+{% block body %}
+    <div id ="idTabCmd">
+    <p> 
+        <TABLE BORDER="1"> 
+          <CAPTION> Liste des commandes </CAPTION> 
+          <TR> 
+            <TH> N°Commande </TH> 
+            <TH> Commande </TH> 
+            <TH> Date commande </TH>
+          </TR>
+            {% for commande in tab %}
+            <TR>
+                <li>{{commande[idCmd]}}</li> {# commande.idCmd #}
+                <li>{{commande[dateCmd]}}</li>
+                <li>{{commande[etatCmd]}}</li>
+                {# si on clique sur détail, redirigie vers /suiviCommandePerso/IdDeLaCommande #}
+                <a href="{{ path('suiviCommandePerso', {'idCmd': commande[idCmd]}) }}">
+                    {{ "Détail" }}
+                </a>
+            </TR>
+            {% endfor %}
+    
+        </TABLE> 
+    </p>
+    </div>
+{% endblock %}
