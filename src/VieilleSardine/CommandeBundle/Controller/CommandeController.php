@@ -3,21 +3,21 @@
 namespace VieilleSardine\CommandeBundle\Controller;
 
 use VieilleSardine\CommandeBundle\Entity\Lignes;
-use VieilleSardine\CommandeBundle\Entity\Commande;
-use VieilleSardine\CommandeBundle\Entity\ConfirmationDeCommande;
 use VieilleSardine\ProduitBundle\Entity\Produit;
 use VieilleSardine\UserBundle\Entity\CompteClient;
 use VieilleSardine\UserBundle\Entity\Client;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class CommandeController extends Controller {
-
-    public function indexAction() {
+class CommandeController extends Controller
+{
+     public function indexAction()
+    {
         return $this->render('VieilleSardineCommandeBundle:Commande:IHMCommandeVPC.html.twig');
     }
-
-    // Méthode qui créer le formulaire utilisé pour ajouter un produit à la commande
+    
+      // Méthode qui créer le formulaire utilisé pour ajouter un produit à la commande
     public function CreerFormVPCAction(Request $request) {
         $session = $request->getSession();
         $nomClient = $session->get('client');
@@ -154,29 +154,21 @@ class CommandeController extends Controller {
                     $form->createView(), "clients" => $client,
         ));
     }
-
-    // Méthode pour la vue du recap de la commande
-    public function CreerFormRecapClient(Request $request) {
-        return $this->render('VieilleSardineCommandeBundle:Commande:IHMRecapCommande.html.twig'
-        );
-    }
     
-    public function RecapAllCommandesNomClientAction()
+        public function CreerFormRecapClient(Request $request)
     {
-          $compteClient = $this->getUser();
-          $id = $compteClient->getID();
-          $manageur = $this->getDoctrine()->getManager();
-          $client = $manageur->getRepository("VieilleSardineUserBundle:Client")->findOneByidCompteClient($id);
-          var_dump($client->getPrenom());
-        $listecommandes = $manageur->getRepository("VieilleSardineCommandeBundle:Commande")->findAll();
-        $tab = array();
+          return $this->render('VieilleSardineCommandeBundle:Commande:IHMRecapCommande.html.twig'
+        ); 
+    }
+         public function RecapAllCommandesNomClientAction()
+    {
+        $manageur = $this->getDoctrine()->getManager();
+        $listecommandes = $manageur->getRepository("CommandeBundle:Commande")->findAll();
          foreach($listecommandes as $cmd) {
         // On ajoute la commande dans l'array.
-        //    $em = $this->getDoctrine()->getEntityManager();
-        //    $client = $em->getRepository('VieilleSardineUserBundle:Client')->findOneByidClient($cmd->getIdClient());
-          
-             
-            $tab[] = array(client => $client->getPrenom(), commandeID => $cmd->getIdCommande(), commandeDate => $cmd->getDateCommande() );
+            $em = $this->getDoctrine()->getEntityManager();
+            $client = $em->getRepository('VieilleSardineUserBundle:Client')->findOneByidClient($listecommandes->getIdClient());
+             $tab[] = array(client => $client->getPrenom(), commandeID => $cmd.getIdCommande(), commandeDate => $cmd.getDateCommande() );
          }
         return $this->render('VieilleSardineCommandeBundle:Commande:SuiviCommande.html.twig', $tab);
     }
@@ -185,12 +177,11 @@ class CommandeController extends Controller {
     {// il manque les frais de port ! où les trouver ?
         $manageur = $this->getDoctrine()->getManager();
         $commande = $manageur->getRepository("CommandeBundle:Commande")->find($idCmd);
-        $manag = $this->getDoctrine()->getManager();
-        $listeLignes = $manag->getRepository("CommandeBundle:Lignes")->findByidCommande($idCmd);
+        $listeLignes = $manageur->getRepository("CommandeBundle:Lignes")->findByidCommande($idCmd);
         $tab = array();
         foreach($listeLignes as $ligne) {
             $em = $this->getDoctrine()->getEntityManager();
-            $pdt = $em->getRepository('VieilleSardineProduitBundle:Produit')->find($ligne.getIdLigne());
+            $pdt = $em->getRepository('VieilleSardineProduitBundle:Produit')->find($ligne.getIdProduit());
             $pT = $pdt.getPrixHt() * $ligne.getQuantite();
             $tab[] = array( produit => $pdt->getTitre(), quantité => $ligne.getQuantite(), prixUnitaire => $pdt.getPrixHt(), prixTotal => $pT );
          }
@@ -212,7 +203,6 @@ class CommandeController extends Controller {
     
     public function suiviCommandePersoAction()
     {
-        $session = $request->getSession();
         $idClt = $session->get('idClient');
         $manageur = $this->getDoctrine()->getManager();
         $listecommandes = $manageur->getRepository("CommandeBundle:Commande")->findByIdClient($idClt);
@@ -221,5 +211,7 @@ class CommandeController extends Controller {
          }
          return $this->render('CommandeBundle:Commande:SuiviCommandePerso.html.twig', $tab);
     }
+
+
 
 }

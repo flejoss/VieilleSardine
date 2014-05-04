@@ -17,27 +17,27 @@
             <TH> Produit </TH> 
             <TH> Quantité </TH>
             <TH> Prix unitaire </TH>
-            <TH> Prix total </TH> $tab, $info
+            <TH> Prix total </TH> 
           </TR>
             {% for ligne in tab %}
             <TR>
-                <td>{{ligne[produit]}}</td> {# ligne.produit #}
-                <td>{{ligne[quantité]}}</td>
-                <td>{{ligne[prixUnitaire]}}</td>
-                <td>{{ligne[prixTotal]}}</td>
+                <td>{{ligne.produit}}</td> {# ligne[produit] #}
+                <td>{{ligne.quantité}}</td>
+                <td>{{ligne.prixUnitaire}}</td>
+                <td>{{ligne.prixTotal}}</td>
             </TR>
             {% endfor %}
             <TR>
                 <td>Type de la commande</td>
-                <td>{{info[type]}}</td> {# info.type #}
+                <td>{{info.type}}</td> {# info.type #}
             </TR>
             <TR>
                 <td>Remise</td>
-                <td>{{info[remise]}}</td>
+                <td>{{info.remise}}</td>
             </TR>
             <TR>
                 <td>Prix total</td>
-                <td>{{info[montant]}}</td>
+                <td>{{info.montant}}</td>
             </TR>
         </TABLE> 
     </p>
