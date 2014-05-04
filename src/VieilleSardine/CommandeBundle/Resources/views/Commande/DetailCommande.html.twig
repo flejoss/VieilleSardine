@@ -4,28 +4,28 @@
 
 {% block body %}
     <div>
-            Détail de la commande du : {{info[dateCommande]}}
+        {#            Détail de la commande du : {{info.dateCommande}}#}
     </div>
     <div>
-            Etat de la commande : {{info[etat]}}
+        Etat de la commande : {{info.etat}}
     </div>
     <div id ="idTabCmd">
-    <p> 
+        <p> 
         <TABLE BORDER="1"> 
-          <CAPTION> Liste des commandes </CAPTION> 
-          <TR> 
-            <TH> Produit </TH> 
-            <TH> Quantité </TH>
-            <TH> Prix unitaire </TH>
-            <TH> Prix total </TH> 
-          </TR>
-            {% for ligne in tab %}
-            <TR>
-                <td>{{ligne.produit}}</td> {# ligne[produit] #}
-                <td>{{ligne.quantité}}</td>
-                <td>{{ligne.prixUnitaire}}</td>
-                <td>{{ligne.prixTotal}}</td>
+            <CAPTION> Liste des commandes </CAPTION> 
+            <TR> 
+                <TH> Produit </TH> 
+                <TH> Quantité </TH>
+                <TH> Prix unitaire </TH>
+                <TH> Prix total </TH> 
             </TR>
+            {% for ligne in tab %}
+                <TR>
+                    <td>{{ligne.produit}}</td> {# ligne[produit] #}
+                    <td>{{ligne.quantite}}</td>
+                    <td>{{ligne.prixUnitaire}}</td>
+                    <td>{{ligne.prixTotal}}</td>
+                </TR>
             {% endfor %}
             <TR>
                 <td>Type de la commande</td>
@@ -33,7 +33,8 @@
             </TR>
             <TR>
                 <td>Remise</td>
-                <td>{{info.remise}}</td>
+{#                <td>{{info.remise}}</td>#}
+                <td>fuck you</td>
             </TR>
             <TR>
                 <td>Prix total</td>
@@ -41,9 +42,9 @@
             </TR>
         </TABLE> 
     </p>
-    </div>
-            {# si on clique sur ce lien, redirigie vers /suiviCommandePerso #}
-            <a href="{{ path('suiviCommandePerso') }}">
-                Retour à toutes les commandes
-            </a>
+</div>
+{# si on clique sur ce lien, redirigie vers /suiviCommandePerso #}
+<a href="{{ path('suivi_Commande_Perso') }}">
+    Retour à toutes les commandes
+</a>
 {% endblock %}

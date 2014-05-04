@@ -6,16 +6,32 @@ vieille_sardine_commande_homepage:
 #    pattern: /clients
 #    defaults: { _controller: VieilleSardineUserBundle:User:getUsers }
 
+commande_groupee:
+    pattern: /commandeGroupe
+    defaults: { _controller: VieilleSardineCommandeBundle:CommandeGroupe:index  }
+    
+suivi_Commande_Perso:
+    pattern: /suiviCommandePerso
+    defaults: { _controller: VieilleSardineCommandeBundle:Commande:suiviCommandePerso}
+    
+detail_commande:
+    pattern: /suiviCommandePerso/{idCmd}
+    defaults: { _controller: VieilleSardineCommandeBundle:Commande:detailCommande }
+
+suivi_commande:
+    pattern: /suiviToutesCommandes
+    defaults: { _controller: VieilleSardineCommandeBundle:Commande:suiviCommandeAll }
+  
 ajout_produit_commande_vpc:
-    pattern:  /CommandeBundle/ajoutProduit
+    pattern:  /ajoutProduit
     defaults: { _controller: VieilleSardineCommandeBundle:Commande:CreerFormVPC }
     
 id_client_commande_vpc:
-    pattern:  /CommandeBundle/identifierClient
+    pattern:  /identifierClient
     defaults: { _controller: VieilleSardineCommandeBundle:Commande:CreerFormIDClient }
     
 recap_commande_vpc:
-    pattern:  /CommandeBundle/RecapitulatifCommande
+    pattern:  /RecapitulatifCommande
     defaults: { _controller: VieilleSardineCommandeBundle:Commande:CreerFormRecapClient }
 
 ahs_commun_json_IdProduit:
@@ -27,20 +43,3 @@ InfoProduit:
     pattern: /js/InfoProduit
     defaults: { _controller: VieilleSardineCommandeBundle:Commande:InfoProduitAction}
     
-commande_groupee:
-    pattern: /CommandeBundle/commandeGroupe
-    defaults: { _controller: VieilleSardineCommandeBundle:CommandeGroupe:index  }
-    
-suivi_Commande_Perso:
-    pattern: /suiviCommandePerso
-    defaults: { _controller: VieilleSardineCommandeBundle:Commande:suiviCommandePerso}
-    
-detail_commande:
-    pattern: /suiviCommandePerso/{idCmd}
-    defaults: { _controller: VieilleSardineCommandeBundle:Commande:detailCommande }
-
-
-suivi_commande:
-    pattern: /CommandeBundle/suiviCommande
-    defaults: { _controller: VieilleSardineCommandeBundle:Commande:RecapAllCommandesNomClient }
- 
